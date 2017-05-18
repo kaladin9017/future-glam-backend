@@ -8,10 +8,13 @@ const port = process.env.PORT || 3000;
 const app = express();
 const compiler = webpack(config);
 import bodyParser from 'body-parser';
-// import expressGraphQL from 'express-graphql';
+import expressGraphQL from 'express-graphql';
+
+// graphql imports
+import schema from '../gqlApi/schema/schema';
 
 // Rest Routes
-import restRouter from '../restApi/index';
+const restRouter = require('../restApi/index');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -19,6 +22,12 @@ app.use(bodyParser.json());
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
+}));
+
+app.use('/graphql', expressGraphQL({
+  // schema: schema,
+  schema,
+  graphiql: true
 }));
 
 restRouter(app);

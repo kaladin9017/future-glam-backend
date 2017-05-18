@@ -1,6 +1,6 @@
 const UserModel = require('../../models/index').User;
 
-function all(req, res) {
+export function findAllUsers(req, res) {
   UserModel.findAll({})
   .then((data) => {
     res.send(data)
@@ -11,4 +11,13 @@ function all(req, res) {
   });
 }
 
-module.exports = all;
+export function findOneUser(req, res) {
+  UserModel.findOne({})
+  .then((data) => {
+    res.send(data)
+  })
+  .catch((err) => {
+    console.log(err) //eslint-disable-line no-console
+    res.sendStatus(500)
+  });
+}

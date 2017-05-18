@@ -34,7 +34,8 @@ module.exports = function(req, res) {
         last_name: req.body.last_name,
         email: req.body.email,
         password: req.body.password,
-        isArtist: req.body.isArtist
+        isArtist: req.body.isArtist,
+        avatar: req.body.avatar
       })
       .then((user)=> {
         return res.json({ token: tokenForUser(user.dataValues) });
