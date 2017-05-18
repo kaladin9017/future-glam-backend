@@ -1,25 +1,30 @@
 import express from 'express';
-import path from 'path';
 import open from 'open';
 import webpack from 'webpack';
 import config from '../webpack.config.dev';
-
-const port = 3000;
+import cors from 'cors';
+import http from 'http';
+const port = process.env.PORT || 3000;
 const app = express();
 const compiler = webpack(config);
+import bodyParser from 'body-parser';
+// import expressGraphQL from 'express-graphql';
+
+// Rest Routes
+import restRouter from '../restApi/index';
+
+app.use(cors());
+app.use(bodyParser.json());
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
 }));
 
+restRouter(app);
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '../src/index.html'));
-});
-
-
-app.listen(port, function(err) {
+const server = http.createServer(app);
+server.listen(port, function(err) {
   if (err) {
     console.log(err) //eslint-disable-line no-console
   }

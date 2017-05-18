@@ -64,6 +64,16 @@
   "homepage": "https://github.com/kaladin9017/future-glam-backend#readme",
   "dependencies": {
     "axios": "^0.16.1",
+    "bcrypt-nodejs": "^0.0.3",
+    "cors": "^2.8.3",
+    "express-graphql": "^0.6.4",
+    "graphql": "^0.9.6",
+    "jwt-simple": "^0.5.1",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "passport-local": "^1.0.0",
+    "pg": "^6.2.2",
+    "sequelize": "^3.30.4",
     "whatwg-fetch": "^2.0.3"
   }
 }
