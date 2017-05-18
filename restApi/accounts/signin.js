@@ -12,5 +12,5 @@ function tokenForUser(user) {
 
 
 module.exports = function (req, res) {
-    res.send({ token: tokenForUser(req.user) })
+    return res.send({ token: tokenForUser(req.user) })
   }

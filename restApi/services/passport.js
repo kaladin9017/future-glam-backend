@@ -13,22 +13,15 @@ const LocalStrategy = require('passport-local');
 */
 const localOptions = { usernameField: 'email' }
 const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
-  UserModel.findOne({ email: email }, function(err, user) {
-    if (err) { return done(err); }
-    console.log(user);
-    if (!user) { return done(false); }
-
-    user.comparePassword(password, function(err, isMatch) {
-      if (err) { return done(err); }
-      if (!isMatch) { return done(null, false); }
-
-      return done(null, user);
-    });
-
-  });
+  UserModel.findOne({ email: email })
+    .then((user) => {
+      user.comparePassword(password, function(err, isMatch) {
+        if (err) { return done(err); }
+        if (!isMatch) { return done(null, false); }
+        return done(null, user.dataValues);
+      });
+    })
 });
-
-
 /*
   Icoming request goes through passport library
   go on to route handler if user is logged in
@@ -47,16 +40,17 @@ const jwtOptions = {
   if true call done(user) else done(false)
 */
 const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
-  UserModel.findById(payload.sub, function(err, user) {
-    if (err) { return done(err, false) }
-    console.log(user)
+  UserModel.findAll({
+    where: { id:payload.sub }
+  })
+  .then((user) => {
     if (user) {
       done(null, user);
     }
     else {
       done(null, false);
     }
-  });
+  })
 });
 
 /*

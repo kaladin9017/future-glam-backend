@@ -3,7 +3,7 @@ const path = require('path');
 const passportService = require('./services/passport'); //eslint-disable-line no-unused-vars
 
 
-// const requireAuth = passport.authenticate('jwt', { session: false });
+const requireAuth = passport.authenticate('jwt', { session: false }); //eslint-disable-line no-unused-vars
 const requireSignin = passport.authenticate('local', { session: false });
 
 // routes
